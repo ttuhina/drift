@@ -7,7 +7,7 @@ function App() {
   const [thoughts, setThoughts] = useState([]);
 
   const fetchThoughts = async () => {
-    const res = await axios.get('http://localhost:5000/api/thoughts');
+    const res = await axios.get('http://localhost:5050/api/thoughts');
     setThoughts(res.data);
   };
 

@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 
-const ThoughtSchema = new mongoose.Schema({
-  content: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+const thoughtSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true
+  }
 });
 
-module.exports = mongoose.model('Thought', ThoughtSchema);
+module.exports = mongoose.model('Thought', thoughtSchema);

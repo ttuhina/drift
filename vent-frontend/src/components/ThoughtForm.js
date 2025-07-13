@@ -6,7 +6,7 @@ function ThoughtForm({ onAdd }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/api/thoughts', { content });
+    await axios.post('http://localhost:5050/api/thoughts', { content });
     setContent('');
     onAdd();
   };
