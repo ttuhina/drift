@@ -1,50 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './ThoughtItem.css';
 
 function ThoughtItem({ thought, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [newContent, setNewContent] = useState(thought.content);
+  const [content, setContent] = useState(thought.content);
 
-  // 🗑️ Delete handler
   const handleDelete = async () => {
-    try {
-      await axios.delete(`http://localhost:5050/api/thoughts/${thought._id}`);
-      onUpdate(); // Refresh thought list after delete
-    } catch (err) {
-      console.error('❌ Delete failed:', err.message);
-    }
+    await axios.delete(`http://localhost:5050/api/thoughts/${thought._id}`);
+    onUpdate();
   };
 
-  // ✏️ Edit/save handler
   const handleUpdate = async () => {
-    try {
-      await axios.put(`http://localhost:5050/api/thoughts/${thought._id}`, {
-        content: newContent,
-      });
-      setIsEditing(false);
-      onUpdate(); // Refresh list after edit
-    } catch (err) {
-      console.error('❌ Update failed:', err.message);
-    }
+    await axios.put(`http://localhost:5050/api/thoughts/${thought._id}`, { content });
+    setIsEditing(false);
+    onUpdate();
   };
 
   return (
-    <div className="thought">
+    <div className="thought-card">
       {isEditing ? (
         <>
-          <textarea
-            value={newContent}
-            onChange={(e) => setNewContent(e.target.value)}
-          />
-          <button onClick={handleUpdate}>Save</button>
+          <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+          <button onClick={handleUpdate}>💾 Save</button>
         </>
       ) : (
         <>
           <p>{thought.content}</p>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <div className="btns">
+            <button onClick={() => setIsEditing(true)}>✏️ Edit</button>
+            <button onClick={handleDelete}>🗑️ Delete</button>
+          </div>
         </>
       )}
-      <button onClick={handleDelete}>🗑️</button>
     </div>
   );
 }
